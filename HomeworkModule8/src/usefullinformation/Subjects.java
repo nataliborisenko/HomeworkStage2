@@ -1,0 +1,5 @@
+package usefullinformation;
+
+public enum Subjects {
+    PHYSICAL_EDUCATION, ENGLISH_LANGUAGE, HISTORY, ECONOMIC, BIOLOGY, CHEMISTRY, HUMAN_ANATOMY
+}
