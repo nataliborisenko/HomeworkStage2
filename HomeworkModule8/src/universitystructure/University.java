@@ -2,23 +2,20 @@ package universitystructure;
 import listexceptions.NoFacultiesInUniversityException;
 import usefullinformation.NamesOfUniversity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+import java.util.*;
 
 public class University {
     NamesOfUniversity nameOfUniversity;
-    private List<Faculty> namesOfFaculties;
+    private List<Faculty> listOfFaculties;
 
     public University(NamesOfUniversity nameOfUniversity, List<Faculty> namesOfFaculties) {
         List<Faculty> sortedListOfFaculty = sortFacultiesAccordingNameOfUniversity(nameOfUniversity, namesOfFaculties);
         try {
             if (sortedListOfFaculty.isEmpty()) {
-                throw new NoFacultiesInUniversityException("University cannot be created without groups");
+                throw new NoFacultiesInUniversityException("University cannot be created without faculties");
             } else {
                 this.nameOfUniversity = nameOfUniversity;
-                this.namesOfFaculties = namesOfFaculties;
+                this.listOfFaculties = namesOfFaculties;
             }
         } catch (NoFacultiesInUniversityException e) {
             e.printStackTrace();
@@ -33,14 +30,13 @@ public class University {
         this.nameOfUniversity = nameOfUniversity;
     }
 
-    public List<Faculty> getNamesOfFaculties() {
-        return namesOfFaculties;
+    public List<Faculty> getListOfFaculties() {
+        return listOfFaculties;
     }
 
-    public void setNamesOfFaculties(List<Faculty> namesOfFaculties) {
-        this.namesOfFaculties = namesOfFaculties;
+    public void setListOfFaculties(List<Faculty> listOfFaculties) {
+        this.listOfFaculties = listOfFaculties;
     }
-
 
     public static ArrayList<Faculty> sortFacultiesAccordingNameOfUniversity(NamesOfUniversity nameOfUniversity, List<Faculty> listOfFaculties) {
         ArrayList<Faculty> listOfFacultiesSpecialUniversity = new ArrayList<>();
@@ -57,19 +53,19 @@ public class University {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         University that = (University) o;
-        return nameOfUniversity == that.nameOfUniversity && Objects.equals(namesOfFaculties, that.namesOfFaculties);
+        return nameOfUniversity == that.nameOfUniversity && Objects.equals(listOfFaculties, that.listOfFaculties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameOfUniversity, namesOfFaculties);
+        return Objects.hash(nameOfUniversity, listOfFaculties);
     }
 
     @Override
     public String toString() {
         return "University{" +
                 "nameOfUniversity=" + nameOfUniversity +
-                ", namesOfFaculties=" + namesOfFaculties +
+                ", listOfFaculties=" + listOfFaculties +
                 '}';
     }
 }

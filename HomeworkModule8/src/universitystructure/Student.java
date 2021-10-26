@@ -1,9 +1,7 @@
 package universitystructure;
 
 import usefullinformation.*;
-import java.util.HashMap;
-import java.util.Objects;
-
+import java.util.*;
 
 public class Student {
     private String surname;

@@ -1,50 +1,46 @@
 package usefullinformation;
 import universitystructure.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.OptionalDouble;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class CalculatingAverageMark {
     public static void studentAverageMarkForAllSubjects(Student student) {
-        int sumOfMarks = 0, averageMark = 0;
         ArrayList<Integer> mark = new ArrayList<>(student.getStudentRecordBook().values());
-        for (Integer marks : mark) {
-            sumOfMarks += marks;
-            averageMark = sumOfMarks / mark.size();
-
-        }
-        System.out.println("Student's average mark for all subjects is: " + averageMark);
+        OptionalDouble averageMark = mark.stream()
+                .mapToInt(integer -> Integer.valueOf(integer))
+                .average();
+        averageMark.ifPresent(value -> System.out.println("Student's average mark for all subjects is: " + value));
     }
 
-    public static void averageMarkForSpecialSubjectInSpecialGroupOnSpecialFaculty(List<Group> listOfGroups, NameOfFaculty nameOfFaculty, int numberOfGroup, Subjects subject) {
-        int sumOfMarks = 0, countNumbers = 0;
-        for (Group group : listOfGroups) {
-            if (group.getNameOfFaculty() == nameOfFaculty & group.getNumberOfGroup() == numberOfGroup) {
-                for (Student student : group.getStudents()) {
-                    if (student.getStudentRecordBook().containsKey(subject)) {
-                        sumOfMarks += student.getStudentRecordBook().get(subject);
-                        countNumbers++;
-                    }
-                }
-            }
-        }
-        System.out.println("Average mark for subject: " + subject + " on faculty: " + nameOfFaculty + " in group: " + numberOfGroup + " is: " + sumOfMarks / countNumbers);
+    public static void averageMarkForSpecialSubjectInSpecialGroupOnSpecialFaculty(University university, NameOfFaculty nameOfFaculty, int numberOfGroup, Subjects subject) {
+        List<Faculty> listOfFaculties = university.getListOfFaculties();
+        OptionalDouble average = listOfFaculties.stream()
+                .flatMap((Function<Faculty, Stream<Group>>) faculty -> faculty.getListOfGroups().stream())
+                .filter(group -> group.getNumberOfGroup() == numberOfGroup)
+                .flatMap((Function<Group, Stream<Student>>) group -> group.getStudents().stream())
+                .filter(student -> student.getStudentRecordBook().containsKey(subject))
+                .map(student -> student.getStudentRecordBook().getOrDefault(subject, 0))
+                .mapToInt(integer -> Integer.valueOf(integer))
+                .average();
+
+        average.ifPresent(value -> System.out.println("The average mark for subject: " + subject + " on faculty: " + nameOfFaculty + " in group: " + numberOfGroup + " is: " + value));
     }
 
-    public static void averageMarkForSpecialSubjectInAllUniversity(List<Faculty> listOfFaculties, Subjects subject) {
-        int sumOfMarks = 0, countNumbers = 0;
-        for (Faculty faculty : listOfFaculties) {
-            for (Group group : faculty.getListOfGroups()) {
-                for (Student student : group.getStudents()) {
-                    if (student.getStudentRecordBook().containsKey(subject)) {
-                        sumOfMarks += student.getStudentRecordBook().get(subject);
-                        countNumbers++;
-                    }
-                }
-            }
-        }
-        System.out.println("Average mark for subject: " + subject + " in University is: "+ sumOfMarks / countNumbers);
+    public static void averageMarkForSpecialSubjectAtUniversity(University university, Subjects subject) {
+        List<Faculty> listOfFaculties = university.getListOfFaculties();
+        OptionalDouble average = listOfFaculties.stream()
+                .flatMap((Function<Faculty, Stream<Group>>) faculty -> faculty.getListOfGroups().stream())
+                .flatMap((Function<Group, Stream<Student>>) group -> group.getStudents().stream())
+                .filter(student -> student.getStudentRecordBook().containsKey(subject))
+                .map(student -> student.getStudentRecordBook().getOrDefault(subject, 0))
+                .mapToInt(integer -> Integer.valueOf(integer))
+                .average();
+        average.ifPresent(value -> System.out.println("The average mark for subject: " + subject + " at the university is: " + value));
     }
 }
+
 
 
 

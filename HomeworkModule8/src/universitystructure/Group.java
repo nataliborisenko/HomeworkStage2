@@ -9,7 +9,6 @@ public class Group {
     private int numberOfGroup;
     private List<Student> students;
 
-
     public Group(NameOfFaculty nameOfFaculty, int numberOfGroup, List<Student> students) {
         List<Student> sortedListOfStudents = sortStudentsAccordingGroup(numberOfGroup, students);
         try {
