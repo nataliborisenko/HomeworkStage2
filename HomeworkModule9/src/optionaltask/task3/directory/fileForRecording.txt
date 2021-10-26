@@ -1,0 +1,9 @@
+cilbup ssalc tnedutS sdnetxe nosreP { 
+cilbup tni ;di 
+ytlucaF ;emaNytlucaf 
+cilbup tni ;rebmuNesruoc 
+cilbup tni ;rebmuNpuorg 
+ 
+cilbup )(tnedutS { 
+;)(repus 
+} 

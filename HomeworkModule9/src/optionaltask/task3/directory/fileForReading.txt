@@ -1,0 +1,9 @@
+public class Student extends Person {
+    public int id;
+    Faculty facultyName;
+    public int courseNumber;
+    public int groupNumber;
+
+    public Student() {
+        super();
+    }

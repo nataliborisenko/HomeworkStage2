@@ -1,0 +1,27 @@
+private class Student extends Person {
+    private int id;
+    Faculty facultyName;
+    private int courseNumber;
+    private int groupNumber;
+
+    private Student() {
+        super();
+    }
+
+    private Student(int id, Faculty type, int courseNumber, int groupNumber) {
+        this.id = id;
+        facultyName = type;
+        this.courseNumber = courseNumber;
+        this.groupNumber = groupNumber;
+    }
+
+    private Student(String surname, String name, String middleName, String dateOfBirth, Faculty type, int courseNumber, int groupNumber) {
+        super(surname, name, middleName, dateOfBirth);
+        facultyName = type;
+        this.courseNumber = courseNumber;
+        this.groupNumber = groupNumber;
+    }
+
+    private Faculty getFacultyName() {
+        return facultyName;
+    }
