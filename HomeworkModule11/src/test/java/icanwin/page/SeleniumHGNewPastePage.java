@@ -3,7 +3,7 @@ package icanwin.page;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 
-public class SeleniumHGNewPaste {
+public class SeleniumHGNewPastePage extends AbstractPage {
     private WebDriver webDriver;
 
     @FindBy(xpath = "//div[@class='de1']")
@@ -15,9 +15,10 @@ public class SeleniumHGNewPaste {
     @FindBy(xpath = "//div[@class='info-top']/h1")
     private WebElement valueOfPasteTitle;
 
-    public SeleniumHGNewPaste(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
+    public SeleniumHGNewPastePage(WebDriver webDriver) {
+        super(webDriver);
         this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
     public String getValueOfCode() {
@@ -32,4 +33,3 @@ public class SeleniumHGNewPaste {
         return valueOfPasteTitle.getText();
     }
 }
-

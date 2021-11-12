@@ -2,16 +2,12 @@ package icanwin.page;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
-import org.openqa.selenium.support.ui.*;
 
-public class SeleniumHGHomePage {
+public class SeleniumHGHomePage extends AbstractPage {
     private WebDriver webDriver;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement buttonForCheckingLoadingPage;
-
-    @FindBy(xpath = "div[@class='content__title -no-border']")
-    private WebElement lineForCheckingLoadingNewPage;
+    private String buttonForCheckingLoadingHomePage = "//div[contains(text(), 'Optional Paste Settings')]";
+    private String lineForCheckingLoadingCreatedPage = "//div[contains(text(), 'RAW Paste Data')]";
 
     @FindBy(id = "postform-text")
     private WebElement entryLineForCode;
@@ -19,47 +15,42 @@ public class SeleniumHGHomePage {
     @FindBy(xpath = "//span[@id='select2-postform-expiration-container']")
     private WebElement clickOnTheDropDownList;
 
-    @FindBy(xpath = "//ul[@role='listbox']//li[text()='10 Minutes']")
-    private WebElement findFieldToChangePasteExpiration;
+    @FindBy (xpath = "//li[contains(text(), '10 Minutes')]")
+    private WebElement optionToChangePasteExpiration;
 
     @FindBy(id = "postform-name")
     private WebElement entryLineForPasteTitle;
 
-    @FindBy(xpath = "//button[@class='btn -big']")
+    @FindBy(xpath = "//button[contains(text(), 'Create New Paste')]")
     private WebElement buttonForCreationNewPaste;
 
-
     public SeleniumHGHomePage(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
+        super(webDriver);
         this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
-    public SeleniumHGHomePage openHomePage(String HOMEPAGE_URL) {
+    public void openHomePage(String HOMEPAGE_URL) {
         webDriver.get(HOMEPAGE_URL);
-       new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.valueOf(buttonForCheckingLoadingPage))));
-        return this;
+        waitElementToVisibilityByXpathWithoutClick(buttonForCheckingLoadingHomePage);
     }
 
-    public SeleniumHGHomePage addingCodeValue(String CODE_VALUE) {
+    public void addingCodeValue(String CODE_VALUE) {
         entryLineForCode.sendKeys(CODE_VALUE);
-        return this;
     }
 
-    public SeleniumHGHomePage selectingValueInDropDownList() {
-         new WebDriverWait(webDriver, 20).until(ExpectedConditions.elementToBeClickable(By.xpath(String.valueOf(clickOnTheDropDownList)))).click();
-        findFieldToChangePasteExpiration.click();
-        return this;
+    public void selectingValueInDropDownList() {
+        waitElementToClick(clickOnTheDropDownList);
+        optionToChangePasteExpiration.click();
     }
 
-    public SeleniumHGHomePage addingInformationAboutTitle(String PASTE_TITLE) {
+    public void addingInformationAboutTitle(String PASTE_TITLE) {
         entryLineForPasteTitle.sendKeys(PASTE_TITLE);
-        return this;
     }
 
-    public String creationNewPaste() {
-            buttonForCreationNewPaste.click();
-          new WebDriverWait(webDriver, 20).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.valueOf(lineForCheckingLoadingNewPage))));
-        return webDriver.getCurrentUrl();
+    public void creationNewPaste() {
+        waitElementToClick(buttonForCreationNewPaste);
+        waitElementToVisibilityByXpathWithoutClick(lineForCheckingLoadingCreatedPage);
     }
 }
 

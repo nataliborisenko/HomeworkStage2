@@ -2,78 +2,77 @@ package bringiton.page;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
-import org.openqa.selenium.support.ui.*;
 
-public class SeleniumHGOriginPage {
+public class SeleniumHGOriginPage extends AbstractPage {
     private WebDriver webDriver;
 
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement buttonForCheckingLoadingPage;
-
-    @FindBy(xpath = "div[@class='content__title -no-border']")
-    private WebElement lineForCheckingLoadingNewPage;
+    private String buttonForCheckingLoadingOriginPage = "//div[contains(text(), 'Optional Paste Settings')]";
+    private String lineForCheckingLoadingCreatedPage = "//div[contains(text(), 'RAW Paste Data')]";
 
     @FindBy(id = "postform-text")
     private WebElement entryLineForCode;
 
-    @FindBy(id = "select2-postform-format-container")
+    @FindBy(xpath = "//span[@id='select2-postform-format-container']")
     private WebElement clickOnTheDropDownSyntax;
 
-    @FindBy(xpath = "//select[@id='postform-format']//option[text()='Bash']")
+    @FindBy(xpath = "//li[contains(text(), 'Bash')]")
     private WebElement optionToChangeHighlighting;
 
     @FindBy(xpath = "//div[@class='toggle']//label")
     private WebElement turnOnHighlighting;
 
-    @FindBy(id = "select2-postform-expiration-container")
+    @FindBy(xpath = "//span[@id='select2-postform-expiration-container']")
     private WebElement clickOnTheDropDownExpiration;
 
-    @FindBy(xpath = "//ul[@role='listbox']//li[text()='10 Minutes']")
+    @FindBy(xpath = "//li[contains(text(), '10 Minutes')]")
     private WebElement optionToChangePasteExpiration;
 
     @FindBy(id = "postform-name")
     private WebElement entryLineForPasteTitle;
 
-    @FindBy(xpath = "//button[@class='btn -big']")
+    @FindBy(xpath = "//button[contains(text(), 'Create New Paste')]")
     private WebElement buttonForCreationNewPaste;
 
+    @FindBy(xpath = " //a[contains(text(), 'download')]")
+    private WebElement buttonToDownloadNewPaste;
+
     public SeleniumHGOriginPage(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
+        super(webDriver);
         this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
-    public SeleniumHGOriginPage openPage(String HOMEPAGE_URL) {
+    public void openPage(String HOMEPAGE_URL) {
         webDriver.get(HOMEPAGE_URL);
-        new WebDriverWait(webDriver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.valueOf(buttonForCheckingLoadingPage))));
-        return this;
+        waitElementToVisibilityByXpathWithoutClick(buttonForCheckingLoadingOriginPage);
     }
 
-    public SeleniumHGOriginPage addingCode(String CODE_VALUE) {
+    public void addingCode(String CODE_VALUE) {
         entryLineForCode.sendKeys(CODE_VALUE);
-        return this;
     }
 
-    public SeleniumHGOriginPage selectSyntaxInDropDownList() {
-        new WebDriverWait(webDriver, 10).until(ExpectedConditions.elementToBeClickable(By.id(String.valueOf(clickOnTheDropDownSyntax)))).click();
+    public void selectSyntaxInDropDownList() {
+        waitElementToClick(clickOnTheDropDownSyntax);
         optionToChangeHighlighting.click();
-        turnOnHighlighting.click();
-        return this;
     }
 
-    public SeleniumHGOriginPage selectExpirationInDropDownList() {
-        new WebDriverWait(webDriver, 10).until(ExpectedConditions.elementToBeClickable(By.id(String.valueOf(clickOnTheDropDownExpiration)))).click();
+    public void selectExpirationInDropDownList() {
+        waitElementToClick(clickOnTheDropDownExpiration);
         optionToChangePasteExpiration.click();
-        return this;
     }
 
-    public SeleniumHGOriginPage addingPasteTitle(String PASTE_TITLE) {
+    public void turnOnHighlighting() {
+        waitElementToClick(turnOnHighlighting);
+    }
+
+    public void addingPasteTitle(String PASTE_TITLE) {
         entryLineForPasteTitle.sendKeys(PASTE_TITLE);
-        return this;
     }
 
-    public String creationNewPaste() {
-        buttonForCreationNewPaste.click();
-        new WebDriverWait(webDriver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.valueOf(lineForCheckingLoadingNewPage))));
-        return webDriver.getCurrentUrl();
+    public void creationNewPasteAndSaving() {
+        waitElementToClick(buttonForCreationNewPaste);
+        waitElementToVisibilityByXpathWithoutClick(lineForCheckingLoadingCreatedPage);
+        waitElementToClick(buttonToDownloadNewPaste);
     }
 }
+

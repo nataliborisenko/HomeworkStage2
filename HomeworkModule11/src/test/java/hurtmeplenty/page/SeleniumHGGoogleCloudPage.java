@@ -2,31 +2,38 @@ package hurtmeplenty.page;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
-import org.openqa.selenium.support.ui.*;
 
-public class SeleniumHGGoogleCloudPage {
+public class SeleniumHGGoogleCloudPage extends AbstractPage {
     private WebDriver webDriver;
 
-    @FindBy(name = "q")
-    private WebElement buttonToOpenSearch;
+   private String lineToCheckLoadingPage = "Get started for free";
 
+    @FindBy(name = "q")
+    private WebElement searchButton;
 
     public SeleniumHGGoogleCloudPage(WebDriver webDriver) {
-        PageFactory.initElements(webDriver, this);
+        super(webDriver);
         this.webDriver = webDriver;
+        PageFactory.initElements(webDriver, this);
     }
 
-    public SeleniumHGGoogleCloudPage openGoogleCloud(String HOMEPAGE_URL) {
+    public void openPageCloudGoogleCom(String HOMEPAGE_URL) {
         webDriver.get(HOMEPAGE_URL);
-        new WebDriverWait(webDriver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Get started for free")));
-        ;
-        return this;
+        waitElementToVisibilityByLinkTextWithoutClick(lineToCheckLoadingPage);
     }
 
-    public SeleniumHGGoogleCloudPage addSearchLineAndAchieveNewURL(String lineForSearch) {
-        buttonToOpenSearch.click();
-        buttonToOpenSearch.sendKeys(lineForSearch, Keys.ENTER);                                   //!
-        return this;
+    public void enterLineForSearchNewPage(String lineForSearch) {
+        searchButton.click();
+        searchButton.sendKeys(lineForSearch, Keys.ENTER);
+    }
+
+    public void goToChildIframe(String CHILD_IFRAME, String linkToSwitchToNeedPage) {
+        waitElementToVisibilityByLinkTextWithClick(linkToSwitchToNeedPage);
+        waitElementToVisibilityByLinkTextWithoutClick(lineToCheckLoadingPage);
+        webDriver.get(CHILD_IFRAME);
     }
 }
+
+
+
+

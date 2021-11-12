@@ -12,35 +12,35 @@ public class WebDriverSeleniumHGTest {
     private static final String CODE_VALUE = "Hello from WebDriver";
     private static final String PASTE_EXPIRATION = "10 MIN";
     private static final String PASTE_TITLE = "helloweb";
-    private String newURL;
-    SeleniumHGNewPaste windowWithNewPaste;
+    protected SeleniumHGHomePage homePage;
+    protected SeleniumHGNewPastePage newPastePage;
 
     @BeforeClass(alwaysRun = true)
-    public String creationNewPage() {
+    public void creationNewPaste() {
         webDriver = new ChromeDriver();
-        newURL = new SeleniumHGHomePage(webDriver)
-                .openHomePage(HOMEPAGE_URL)
-                .addingCodeValue(CODE_VALUE)
-                .selectingValueInDropDownList()
-                .addingInformationAboutTitle(PASTE_TITLE)
-                .creationNewPaste();
-        return newURL;
+        homePage = new SeleniumHGHomePage(webDriver);
+        newPastePage = new SeleniumHGNewPastePage(webDriver);
+
+        homePage.openHomePage(HOMEPAGE_URL);
+        homePage.addingCodeValue(CODE_VALUE);
+        homePage.selectingValueInDropDownList();
+        homePage.addingInformationAboutTitle(PASTE_TITLE);
+        homePage.creationNewPaste();
     }
 
-    @Test(priority = 1, description = "Check code value")
+    @Test(description = "Check code value")
     public void checkingCreationNewPasteWithCodeValue() {
-        webDriver.get(newURL);
-        Assert.assertEquals(windowWithNewPaste.getValueOfCode(), CODE_VALUE);
+        Assert.assertEquals(newPastePage.getValueOfCode(), CODE_VALUE);
     }
 
-    @Test(priority = 2, description = "Check paste expiration")
+    @Test(description = "Check paste expiration")
     public void checkingCreationNewPasteWithPasteExpiration() {
-        Assert.assertEquals(windowWithNewPaste.getValueOfPasteExpiration(), PASTE_EXPIRATION);
+        Assert.assertEquals(newPastePage.getValueOfPasteExpiration(), PASTE_EXPIRATION);
     }
 
-    @Test(priority = 3, description = "Check paste title")
+    @Test(description = "Check paste title")
     public void checkingCreationNewPasteWithRightPasteTitle() {
-        Assert.assertEquals(windowWithNewPaste.getValueOfPasteTitle(), PASTE_TITLE);
+        Assert.assertEquals(newPastePage.getValueOfPasteTitle(), PASTE_TITLE);
     }
 
     @AfterClass(alwaysRun = true)
@@ -48,4 +48,3 @@ public class WebDriverSeleniumHGTest {
         webDriver.quit();
     }
 }
-
