@@ -1,11 +1,10 @@
-package hurtmeplenty.page;
+package hardcore.page;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.*;
+import org.openqa.selenium.support.FindBy;
 
 public class SeleniumHGGoogleCloudPage extends AbstractPage {
-
-   private static final String LINE_TO_CHECK_LOADING_PAGE = "Get started for free";
+    private static final String LINE_TO_CHECK_LOADING_PAGE = "Get started for free";
 
     @FindBy(name = "q")
     private WebElement searchButton;
@@ -26,13 +25,12 @@ public class SeleniumHGGoogleCloudPage extends AbstractPage {
         return this;
     }
 
-    public void goToChildIframe(String CHILD_IFRAME, String linkToSwitchToNeedPage) {
+    public SeleniumHGGoogleCloudPage goToChildIframe(String CHILD_IFRAME, String linkToSwitchToNeedPage) {
         waitElementToVisibilityByLinkTextWithClick(linkToSwitchToNeedPage);
         waitElementToVisibilityByLinkTextWithoutClick(LINE_TO_CHECK_LOADING_PAGE);
         webDriver.get(CHILD_IFRAME);
+        return this;
     }
 }
-
-
 
 

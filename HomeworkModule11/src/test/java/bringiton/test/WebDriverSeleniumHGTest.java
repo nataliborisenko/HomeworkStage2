@@ -12,37 +12,36 @@ public class WebDriverSeleniumHGTest {
     private static final String CODE_VALUE = "git config --global user.name \"New Sheriff in Town\"\n" +
             "git reset $(git commit-tree HEAD^{tree} -m \"Legacy code\")\n" +
             "git push origin master --force";
-    private static final String HIGHLIGHTING = "bash";
+    private static final String HIGHLIGHTING = "Bash";
     private static final String PASTE_TITLE = "how to gain dominance among developers";
-    protected SeleniumHGOriginPage homePage;
-    protected SeleniumHGWithSyntaxPage newCreatedPage;
+    SeleniumHGWithSyntaxPage newCreatedPage;
 
     @BeforeClass(alwaysRun = true)
-    public void creationNewPage() {
+    public void browserSetup() {
         webDriver = new ChromeDriver();
-        homePage = new SeleniumHGOriginPage(webDriver);
-        newCreatedPage = new SeleniumHGWithSyntaxPage(webDriver);
-
-            homePage.openPage(HOMEPAGE_URL);
-            homePage.addingCode(CODE_VALUE);
-            homePage.selectSyntaxInDropDownList();
-            homePage.selectExpirationInDropDownList();
-            homePage.turnOnHighlighting();
-            homePage.addingPasteTitle(PASTE_TITLE);
-            homePage.creationNewPasteAndSaving();
+        webDriver.manage().window().maximize();
     }
 
-    @Test(description = "Check paste title")
+    @Test(priority = 1, description = "Check paste title")
     public void checkingCreationNewPasteWithRightPasteTitle() {
+                new SeleniumHGOriginPage(webDriver)
+                .openPage(HOMEPAGE_URL)
+                .addingCode(CODE_VALUE)
+                .selectSyntaxInDropDownList()
+                .selectExpirationInDropDownList()
+                .turnOnHighlighting()
+                .addingPasteTitle(PASTE_TITLE)
+                .creationNewPasteAndSaving();
+        newCreatedPage = new SeleniumHGWithSyntaxPage(webDriver);
         Assert.assertEquals((newCreatedPage.getTitle()), PASTE_TITLE);
     }
 
-    @Test(description = "Check code")
+    @Test(priority = 2, description = "Check code")
     public void checkingCreationNewPasteWithRightCodeValue() {
         Assert.assertEquals(newCreatedPage.getValueOfCode(), CODE_VALUE);
     }
 
-    @Test(description = "Check syntax highlighting")
+    @Test(priority = 3, description = "Check syntax highlighting")
     public void checkingCreationNewPasteWithRightSyntaxHighlighting() {
         Assert.assertEquals(newCreatedPage.getStyleValue(), HIGHLIGHTING);
     }

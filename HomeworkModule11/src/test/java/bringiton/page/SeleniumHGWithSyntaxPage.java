@@ -4,7 +4,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 
 public class SeleniumHGWithSyntaxPage extends AbstractPage {
-    private WebDriver webDriver;
 
     @FindBy(xpath = "//div[@class='info-top']/h1")
     private WebElement titleValue;
@@ -12,13 +11,11 @@ public class SeleniumHGWithSyntaxPage extends AbstractPage {
     @FindBy(xpath = "//textarea[@class='textarea']")
     private WebElement areaForWritingCode;
 
-    @FindBy(xpath = "//div[@class='source']//ol")
+    @FindBy(xpath = "//div[@class='left']//a")
     private WebElement styleValue;
 
     public SeleniumHGWithSyntaxPage(WebDriver webDriver) {
         super(webDriver);
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
     }
 
     public String getTitle() {
@@ -29,7 +26,8 @@ public class SeleniumHGWithSyntaxPage extends AbstractPage {
         return areaForWritingCode.getText();
     }
 
-    public String getStyleValue() { return styleValue.getText();
+    public String getStyleValue() {
+        return styleValue.getText();
     }
 }
 

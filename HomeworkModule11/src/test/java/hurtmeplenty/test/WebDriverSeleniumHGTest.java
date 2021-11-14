@@ -11,71 +11,66 @@ public class WebDriverSeleniumHGTest {
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private static final String CHILD_IFRAME = "https://cloudpricingcalculator.appspot.com";
     private static final String LINE_FOR_SEARCH_NEW_PAGE = "Google Cloud Platform Pricing Calculator";
-    private static final String numberOfInstances = "4";
-    private static final String VMClass = "regular";
-    private static final String instanceType = "n1-standard-8";
-    private static final String localSSD = "2x375 GiB";
-    private static final String location = "Frankfurt";
-    private static final String commitmentTerm = "1 Year";
-    private static final String amountOfRentByManuallyPassing = "1,084.69";
-
-    SeleniumHGGoogleCloudPage cloudPage;
-    SeleniumHGPricingCalculatorPage pricingCalculatorPage;
+    private static final String NUMBER_OF_INSTANCES = "4";
+    private static final String VM_CLASS = "regular";
+    private static final String INSTANCE_TYPE = "n1-standard-8";
+    private static final String LOCAL_SSD = "2x375 GiB";
+    private static final String LOCATION = "Frankfurt";
+    private static final String COMMITMENT_TERM = "1 Year";
+    private static final String AMOUNT_OF_RENT_BY_MANUAL_PASSING = "1,084.69";
     SeleniumHGEstimatePage estimatePage;
 
-
     @BeforeClass(alwaysRun = true)
-    public void creationEstimateComputeEngine() {
+    public void browserSetup() {
         webDriver = new ChromeDriver();
-        cloudPage = new SeleniumHGGoogleCloudPage(webDriver);
-        pricingCalculatorPage = new SeleniumHGPricingCalculatorPage(webDriver);
-        estimatePage = new SeleniumHGEstimatePage(webDriver);
-
-        cloudPage.openPageCloudGoogleCom(HOMEPAGE_URL);
-        cloudPage.enterLineForSearchNewPage(LINE_FOR_SEARCH_NEW_PAGE);
-        cloudPage.goToChildIframe(CHILD_IFRAME,LINE_FOR_SEARCH_NEW_PAGE);
-
-        pricingCalculatorPage.addNumberOfIstances(numberOfInstances);
-        pricingCalculatorPage.addOperationSystem();
-        pricingCalculatorPage.addMachineClass();
-        pricingCalculatorPage.addSeries();
-        pricingCalculatorPage.addInstanceType();
-        pricingCalculatorPage.addGPUsAndNumberOfGPUs();
-        pricingCalculatorPage.addGPUType();
-        pricingCalculatorPage.addLocalSSD();
-        pricingCalculatorPage.addDatacenterLocation();
-        pricingCalculatorPage.addCommitedUsage();
-        pricingCalculatorPage.creationEstimate();
+        webDriver.manage().window().maximize();
     }
 
-    @Test(description = "Check VM Class")
+    @Test(priority = 1, description = "Check VM Class")
     public void checkingEstimationWithRightVMClass() {
-        Assert.assertTrue(estimatePage.getVMClassValue().contains(VMClass));
+        estimatePage = new SeleniumHGEstimatePage(webDriver);
+        new SeleniumHGGoogleCloudPage(webDriver)
+                .openPageCloudGoogleCom(HOMEPAGE_URL)
+                .enterLineForSearchNewPage(LINE_FOR_SEARCH_NEW_PAGE)
+                .goToChildIframe(CHILD_IFRAME, LINE_FOR_SEARCH_NEW_PAGE);
+         new SeleniumHGPricingCalculatorPage(webDriver)
+                .addNumberOfInstances(NUMBER_OF_INSTANCES)
+                .addOperationSystem()
+                .addMachineClass()
+                .addSeries()
+                .addInstanceType()
+                .addGPUsAndNumberOfGPUs()
+                .addGPUType()
+                .addLocalSSD()
+                .addDatacenterLocation()
+                .addCommittedUsage()
+                .creationEstimate();
+        Assert.assertTrue(estimatePage.getVMClassValue().contains(VM_CLASS));
     }
 
-    @Test(description = "Check Instance Type")
+    @Test(priority = 2, description = "Check Instance Type")
     public void checkingCreationEstimationWithRightInstance() {
-        Assert.assertTrue(estimatePage.getInstanceTypeValue().contains(instanceType));
+        Assert.assertTrue(estimatePage.getInstanceTypeValue().contains(INSTANCE_TYPE));
     }
 
-    @Test(description = "Check Local SSD")
+    @Test(priority = 3, description = "Check Local SSD")
     public void checkingCreationNewEstimationPasteWithRightLocalSSD() {
-        Assert.assertTrue((estimatePage.getLocalSSDValue()).contains(localSSD));
+        Assert.assertTrue((estimatePage.getLocalSSDValue()).contains(LOCAL_SSD));
     }
 
-    @Test(description = "Check Location")
+    @Test(priority = 4, description = "Check Location")
     public void checkingCreationNewEstimationPasteWithRightLocation() {
-        Assert.assertTrue((estimatePage.getLocationValue()).contains(location));
+        Assert.assertTrue((estimatePage.getLocationValue()).contains(LOCATION));
     }
 
-    @Test(description = "Check Committed usage")
+    @Test(priority = 5, description = "Check Committed usage")
     public void checkingCreationNewEstimationPasteWithRightCommittedUsage() {
-        Assert.assertTrue(estimatePage.getCommittedUsageValue().contains(commitmentTerm));
+        Assert.assertTrue(estimatePage.getCommittedUsageValue().contains(COMMITMENT_TERM));
     }
 
-    @Test(description = "Check the amount of rent by manual passing and automation")
+    @Test(priority = 6, description = "Check the amount of rent by manual passing and automation")
     public void checkingAmountByManualPassingAndAutomation() {
-        Assert.assertTrue(estimatePage.getAmountByAutomation().contains(amountOfRentByManuallyPassing));
+        Assert.assertTrue(estimatePage.getAmountByAutomation().contains(AMOUNT_OF_RENT_BY_MANUAL_PASSING));
     }
 
     @AfterClass(alwaysRun = true)

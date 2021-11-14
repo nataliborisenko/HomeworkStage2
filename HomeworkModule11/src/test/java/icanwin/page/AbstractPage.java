@@ -5,8 +5,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.*;
 
 public abstract class AbstractPage {
-    private WebDriver webDriver;
-    private final long timeOutOfSeconds = 20;
+    protected WebDriver webDriver;
+    private static final long TIME_OUT_OF_SECONDS = 20;
 
     public AbstractPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -14,14 +14,10 @@ public abstract class AbstractPage {
     }
 
     protected void waitElementToClick(WebElement element) {
-        new WebDriverWait(webDriver, timeOutOfSeconds).until(ExpectedConditions.elementToBeClickable(element)).click();
+        new WebDriverWait(webDriver, TIME_OUT_OF_SECONDS).until(ExpectedConditions.elementToBeClickable(element)).click();
     }
 
     protected void waitElementToVisibilityByXpathWithoutClick(String locator) {
-        new WebDriverWait(webDriver, timeOutOfSeconds).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
-    }
-
-    protected void waitElementToVisibilityByXpathWithClick(String locator) {
-        new WebDriverWait(webDriver, timeOutOfSeconds).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator))).click();
+        new WebDriverWait(webDriver, TIME_OUT_OF_SECONDS).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
     }
 }

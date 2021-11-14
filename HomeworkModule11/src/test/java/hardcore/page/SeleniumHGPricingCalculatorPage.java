@@ -1,10 +1,9 @@
-package hurtmeplenty.page;
+package hardcore.page;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.*;
+import org.openqa.selenium.support.FindBy;
 
 public class SeleniumHGPricingCalculatorPage extends AbstractPage {
-
     private static final String LINE_COMPUTE_ENGINE = "//*[@id='mainForm']//md-tab-item[1]";
     private static final String OPTION_IN_NUMBER_OF_GPUS = "//md-option[@id='select_option_456']//div";
     private static final String BUTTON_TO_CREATE_ESTIMATE = "//button[contains(text(), 'Add to Estimate')]";
@@ -132,8 +131,9 @@ public class SeleniumHGPricingCalculatorPage extends AbstractPage {
         return this;
     }
 
-    public void creationEstimate() {
+    public SeleniumHGPricingCalculatorPage creationEstimate() {
         waitElementToVisibilityByXpathWithClick(BUTTON_TO_CREATE_ESTIMATE);
         waitElementToVisibilityByXpathWithoutClick(LINE_TO_CHECK_LOADING_ESTIMATE_PAGE);
+        return this;
     }
 }

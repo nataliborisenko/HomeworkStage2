@@ -3,7 +3,6 @@ package hurtmeplenty.page;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 
-
 public class SeleniumHGEstimatePage {
     private WebDriver webDriver;
 
@@ -24,7 +23,6 @@ public class SeleniumHGEstimatePage {
 
     @FindBy(xpath = "//h2[@class='md-title']//b")
     private WebElement totalEstimatedCostByAutomation;
-
 
     public SeleniumHGEstimatePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -54,7 +52,6 @@ public class SeleniumHGEstimatePage {
     public String getAmountByAutomation() {
         return totalEstimatedCostByAutomation.getText();
     }
-
 }
 
 

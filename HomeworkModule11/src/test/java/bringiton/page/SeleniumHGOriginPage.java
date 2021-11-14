@@ -4,10 +4,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 
 public class SeleniumHGOriginPage extends AbstractPage {
-    private WebDriver webDriver;
 
-    private String buttonForCheckingLoadingOriginPage = "//div[contains(text(), 'Optional Paste Settings')]";
-    private String lineForCheckingLoadingCreatedPage = "//div[contains(text(), 'RAW Paste Data')]";
+    private static final String BUTTON_TO_CHECK_LOADING_ORIGIN_PAGE = "//div[contains(text(), 'Optional Paste Settings')]";
+    private static final String LINE_TO_CHECK_LOADING_CREATED_PAGE = "//div[contains(text(), 'RAW Paste Data')]";
 
     @FindBy(id = "postform-text")
     private WebElement entryLineForCode;
@@ -30,7 +29,7 @@ public class SeleniumHGOriginPage extends AbstractPage {
     @FindBy(id = "postform-name")
     private WebElement entryLineForPasteTitle;
 
-    @FindBy(xpath = "//button[contains(text(), 'Create New Paste')]")
+    @FindBy(xpath = "//button[@class='btn -big']")
     private WebElement buttonForCreationNewPaste;
 
     @FindBy(xpath = " //a[contains(text(), 'download')]")
@@ -38,40 +37,44 @@ public class SeleniumHGOriginPage extends AbstractPage {
 
     public SeleniumHGOriginPage(WebDriver webDriver) {
         super(webDriver);
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
     }
 
-    public void openPage(String HOMEPAGE_URL) {
+    public SeleniumHGOriginPage openPage(String HOMEPAGE_URL) {
         webDriver.get(HOMEPAGE_URL);
-        waitElementToVisibilityByXpathWithoutClick(buttonForCheckingLoadingOriginPage);
+        waitElementToVisibilityByXpathWithoutClick(BUTTON_TO_CHECK_LOADING_ORIGIN_PAGE);
+        return this;
     }
 
-    public void addingCode(String CODE_VALUE) {
+    public SeleniumHGOriginPage addingCode(String CODE_VALUE) {
         entryLineForCode.sendKeys(CODE_VALUE);
+        return this;
     }
 
-    public void selectSyntaxInDropDownList() {
+    public SeleniumHGOriginPage selectSyntaxInDropDownList() {
         waitElementToClick(clickOnTheDropDownSyntax);
         optionToChangeHighlighting.click();
+        return this;
     }
 
-    public void selectExpirationInDropDownList() {
+    public SeleniumHGOriginPage selectExpirationInDropDownList() {
         waitElementToClick(clickOnTheDropDownExpiration);
         optionToChangePasteExpiration.click();
+        return this;
     }
 
-    public void turnOnHighlighting() {
+    public SeleniumHGOriginPage turnOnHighlighting() {
         waitElementToClick(turnOnHighlighting);
+        return this;
     }
 
-    public void addingPasteTitle(String PASTE_TITLE) {
+    public SeleniumHGOriginPage addingPasteTitle(String PASTE_TITLE) {
         entryLineForPasteTitle.sendKeys(PASTE_TITLE);
+        return this;
     }
 
     public void creationNewPasteAndSaving() {
         waitElementToClick(buttonForCreationNewPaste);
-        waitElementToVisibilityByXpathWithoutClick(lineForCheckingLoadingCreatedPage);
+        waitElementToVisibilityByXpathWithoutClick(LINE_TO_CHECK_LOADING_CREATED_PAGE);
         waitElementToClick(buttonToDownloadNewPaste);
     }
 }

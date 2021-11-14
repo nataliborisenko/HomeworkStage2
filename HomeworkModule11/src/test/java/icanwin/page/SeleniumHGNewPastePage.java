@@ -4,7 +4,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.*;
 
 public class SeleniumHGNewPastePage extends AbstractPage {
-    private WebDriver webDriver;
 
     @FindBy(xpath = "//div[@class='de1']")
     private WebElement valueOfCode;
@@ -17,17 +16,13 @@ public class SeleniumHGNewPastePage extends AbstractPage {
 
     public SeleniumHGNewPastePage(WebDriver webDriver) {
         super(webDriver);
-        this.webDriver = webDriver;
-        PageFactory.initElements(webDriver, this);
     }
 
     public String getValueOfCode() {
         return valueOfCode.getText();
     }
 
-    public String getValueOfPasteExpiration() {
-        return valueOfPasteExpiration.getText();
-    }
+    public String getValueOfPasteExpiration() {return valueOfPasteExpiration.getText(); }
 
     public String getValueOfPasteTitle() {
         return valueOfPasteTitle.getText();
