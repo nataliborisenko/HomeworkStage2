@@ -1,11 +1,12 @@
 package hardcore.page;
 
+import org.apache.logging.log4j.*;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 
-public class SeleniumHGYopMailComPage extends AbstractPage {
-
+public class YopMailPage extends AbstractPage {
+    private final Logger logger = LogManager.getRootLogger();
     private static final String BUTTON_TO_CREATE_RANDOM_EMAIL_ADDRESS = "//div[@class='txtlien']/b";
     private static final String LINE_TO_CHECK_LOADING_PAGE_WITH_RANDOM_EMAIL = "//h2[@class='pagetitle']";
     private static final String LINE_TO_CHECK_LOADING_PAGE_WITH_NEW_LETTER = "//*[contains(text(), 'Total Estimated Monthly Cost')]//following::h3";
@@ -26,36 +27,34 @@ public class SeleniumHGYopMailComPage extends AbstractPage {
     @FindBy(xpath = "//*[contains(text(), 'Total Estimated Monthly Cost')]//following::h3")
     private WebElement lineWithTotalCostInEmail;
 
-    public SeleniumHGYopMailComPage(WebDriver webDriver) {
+    public YopMailPage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    public SeleniumHGYopMailComPage generateRandomEmail(int indexOfWindow) {
-        String command = "window.open('https://yopmail.com/ru/','_blank');";
+    public void switchToWindowAndGenerateRandomEmail(int indexOfWindow, String command) {
         ((JavascriptExecutor) webDriver).executeScript(command);
         getAListOfOpenedWindows();
         switchToWindow(indexOfWindow);
-        waitElementToVisibilityByXpathWithClick(BUTTON_TO_CREATE_RANDOM_EMAIL_ADDRESS);
-        return this;
+        waitToCheckVisibilityOfElementLocatedWithClick(BUTTON_TO_CREATE_RANDOM_EMAIL_ADDRESS);
     }
 
     public String saveEmailAddress() {
-        waitElementToVisibilityByXpathWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_RANDOM_EMAIL);
+        waitToCheckVisibilityOfElementLocatedWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_RANDOM_EMAIL);
         return lineWithRandomEmailAddress.getText();
     }
 
-    public void checkEmailBox(String numberOfEmails, int indexOfWindow) {
+    public void switchToWindowAndCheckEmailBox(String numberOfEmails, int indexOfWindow) {
         switchToWindow(indexOfWindow);
-        waitElementToClick(buttonToCheckEmailBox);
-        waitElementToVisibilityByXpathWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_EMAIL);
+        waitToCheckElementToBeClickable(buttonToCheckEmailBox);
+        waitToCheckVisibilityOfElementLocatedWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_EMAIL);
         while (!lineWithNumberOfEmailsInEmailBox.getText().contains(numberOfEmails)) {
             buttonToRefreshPage.click();
         }
     }
 
-    public String saveTotalCost() {
+    public String switchToFrameAndSaveTotalCost() {
         webDriver.switchTo().frame(2);
-        waitElementToVisibilityByXpathWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_NEW_LETTER);
+        waitToCheckVisibilityOfElementLocatedWithoutClick(LINE_TO_CHECK_LOADING_PAGE_WITH_NEW_LETTER);
         return lineWithTotalCostInEmail.getText();
     }
 }
