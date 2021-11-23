@@ -11,30 +11,30 @@ public class GooglePricingCalculatorPage extends AbstractPage {
     private static final String BUTTON_TO_CREATE_ESTIMATE = "//button[contains(text(), 'Add to Estimate')]";
     private static final String LINE_TO_CHECK_LOADING_ESTIMATE_PAGE = "//div[@class='md-toolbar-tools cpc-estimate-header']//h2";
     private static final String PATH_TO_CHOOSE_TYPE_OF_GPU = "//div[contains(text(), '%s')]";
-    private static final String PATH_CHOOSE_NUMBER_OF_GPU = "//md-option[@id='select_option_461']//div[contains(text(), '%s')]";
+    private static final String PATH_CHOOSE_NUMBER_OF_GPU = "//md-option[@id='select_option_462']//div[contains(text(), '%s')]";
 
     @FindBy(xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
     private WebElement lineForAddingNumberOfInstances;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_66']")
+    @FindBy(xpath = "//md-select-value[@id='select_value_label_67']")
     private WebElement clickOnDropDownListOfOperationSystem;
 
-    @FindBy(xpath = "//md-option[@id='select_option_76']")
+    @FindBy(xpath = "//md-option[@id='select_option_77']")
     private WebElement optionInOperatingSystem;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_67']")
+    @FindBy(xpath = "//md-select-value[@id='select_value_label_68']")
     private WebElement clickOnDropDownListOfVMClass;
 
-    @FindBy(xpath = "//md-option[@id='select_option_89']")
+    @FindBy(xpath = "//md-option[@id='select_option_90']")
     private WebElement optionInVMClass;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_69']")
+    @FindBy(xpath = "//md-select-value[@id='select_value_label_70']")
     private WebElement clickOnDropDownListOfSeries;
 
     @FindBy(xpath = "//div[contains(text(), 'N1')]")
     private WebElement optionInSeries;
 
-    @FindBy(xpath = "//md-select-value[@id='select_value_label_70']")
+    @FindBy(xpath = "//md-select-value[@id='select_value_label_71']")
     private WebElement clickOnDropDownListOfInstanceType;
 
     @FindBy(xpath = "//div[contains(text(), 'n1-standard-8 (vCPUs: 8, RAM: 30GB')]")
@@ -58,13 +58,13 @@ public class GooglePricingCalculatorPage extends AbstractPage {
     @FindBy(xpath = "//md-select[@placeholder='Datacenter location']//md-select-value")
     private WebElement clickOnDropDownListOfLocations;
 
-    @FindBy(xpath = "//md-option[@id='select_option_235']//div")
+    @FindBy(xpath = "//md-option[@id='select_option_236']//div")
     private WebElement optionInLocation;
 
     @FindBy(xpath = "//md-select[@placeholder='Committed usage']//md-select-value")
     private WebElement clickOnDropDownListOfCommittedUsage;
 
-    @FindBy(xpath = "//md-option[@id='select_option_112']//div")
+    @FindBy(xpath = "//md-option[@id='select_option_113']//div")
     private WebElement optionInCommittedUsage;
 
     public GooglePricingCalculatorPage(WebDriver webDriver) {

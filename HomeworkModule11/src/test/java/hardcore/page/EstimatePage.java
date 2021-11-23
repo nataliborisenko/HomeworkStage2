@@ -17,7 +17,7 @@ public class EstimatePage extends AbstractPage {
     @FindBy(xpath = "//h2[@class='md-title']//b")
     private WebElement lineWithTotalCost;
 
-    @FindBy(xpath = "//input[@id='input_527']")
+    @FindBy(xpath = "//input[@id='input_528']")
     private WebElement lineToInputEmailAddress;
 
     @FindBy(xpath = "//button[contains(text(), 'Send Email')]")

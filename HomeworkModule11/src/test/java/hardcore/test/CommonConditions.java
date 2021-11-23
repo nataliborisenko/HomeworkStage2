@@ -25,7 +25,6 @@ public abstract class CommonConditions {
     protected EstimatePage estimatePage;
     protected YopMailPage yopMailComPage;
 
-
     @BeforeClass(alwaysRun = true)
     public void browserSetup(){
         webDriver= DriverSingleton.getWebDriver();
